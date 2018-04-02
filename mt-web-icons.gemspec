@@ -1,5 +1,5 @@
 Gem::Specification.new do |spec|
-  spec.name          = "mt_web_icons"
+  spec.name          = "mt-web-icons"
   spec.version       = "0.0.1"
   spec.authors       = ["Max Wan"]
   spec.email         = ["mwan@moneytree.jp"]
