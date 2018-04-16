@@ -1,3 +1,9 @@
+.mt-scope-investment-accounts-read {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe913;');
+}
+.mt-scope-investment-transactions-read {
+  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe914;');
+}
 .mt-scope-point-transactions-read {
   *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe90e;');
 }
@@ -12,12 +18,6 @@
 }
 .mt-scope-life-insurance-read {
   *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe912;');
-}
-.mt-scope-investment-transactions-read {
-  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe913;');
-}
-.mt-scope-investment-accounts-read {
-  *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe914;');
 }
 .mt-scope-expense-claims-write {
   *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe915;');
@@ -34,7 +34,7 @@
 .mt-scope-transactions-write {
   *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe919;');
 }
-.mt-transactions-read {
+.mt-scope-transactions-read {
   *zoom: expression(this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe91a;');
 }
 .mt-scope-accounts-read {
