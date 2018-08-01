@@ -61,6 +61,7 @@
 		'mt-chevron-down': '&#xea19;',
 		'mt-back': '&#xea18;',
 		'mt-forward': '&#xea03;',
+		'mt-external-link': '&#xe909;',
 		'0': 0
 		},
 		els = document.getElementsByTagName('*'),
