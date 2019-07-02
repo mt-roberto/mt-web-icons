@@ -1,10 +1,13 @@
 {
   "name": "mt-web-icons",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "private": true,
   "description": "Moneytree icons for web-based products.",
+  "package-name": "mt-web-icons",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./scripts/build.js",
+    "postinstall": "yarn build"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,23 @@
   "bugs": {
     "url": "https://github.com/moneytree/mt-web-icons/issues"
   },
-  "homepage": "https://github.com/moneytree/mt-web-icons#readme"
+  "homepage": "https://github.com/moneytree/mt-web-icons#readme",
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "dependencies": {
+    "@svgr/core": "^4.3.0",
+    "ejs": "^2.6.2",
+    "fs-extra": "^8.0.1",
+    "svgo": "^1.2.2",
+    "to-pascal-case": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@types/react": "^16.8.22",
+    "react": "^16.8.6",
+    "type-fest": "^0.5.2"
+  }
 }
