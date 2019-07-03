@@ -8,13 +8,10 @@ const ejs = require('ejs');
 
 const FOLDER = {
   SVGS: path.resolve(__dirname, '../svgs'),
-  COMPONENTS: path.resolve(__dirname, '../components'),
+  REACT: path.resolve(__dirname, '../react'),
   ICOMOON: path.resolve(__dirname, '../icomoon'),
   TEMPLATES: path.resolve(__dirname, '../templates')
 };
-
-FOLDER.REACT = path.join(FOLDER.COMPONENTS, 'react');
-FOLDER.REACT_ICONS = path.join(FOLDER.COMPONENTS, 'react', 'icons');
 
 const BABEL_SETTINGS = {
   plugins: ['@babel/plugin-transform-react-jsx', '@babel/plugin-syntax-dynamic-import']
@@ -39,10 +36,10 @@ const icomoonJsonDefinition = require(path.join(FOLDER.ICOMOON, 'selection.json'
 
 // Removes svgs and components directories in case some icons are not available anymore
 fs.removeSync(FOLDER.SVGS);
-fs.removeSync(FOLDER.COMPONENTS);
+fs.removeSync(FOLDER.REACT);
 
 fs.mkdirsSync(FOLDER.SVGS);
-fs.mkdirsSync(FOLDER.COMPONENTS);
+fs.mkdirsSync(FOLDER.REACT);
 
 icomoonJsonDefinition.forEach(async ({ properties: { name }, icon: { paths } }) => {
   // Creates the SVG source code
@@ -65,7 +62,7 @@ icomoonJsonDefinition.forEach(async ({ properties: { name }, icon: { paths } }) 
 
     // Creates Typescript Components
     const componentName = toPascalCase(name);
-    const componentPath = path.join(FOLDER.REACT_ICONS, componentName);
+    const componentPath = path.join(FOLDER.REACT, componentName);
 
     // Creates `react` folder where to save our components
     fs.mkdirsSync(componentPath);
@@ -94,7 +91,7 @@ async function generateIconComponent() {
   // Creates the switch statements cases with lazy imports.
   const switchStatements = icomoonJsonDefinition.map(({ properties: { name } }) => {
     const componentName = toPascalCase(name);
-    const componentPath = path.join(FOLDER.REACT_ICONS, componentName);
+    const componentPath = path.join(FOLDER.REACT, componentName);
     return `
       case '${componentName}':
         return lazy(() => import('${path.relative(iconComponendFolder, componentPath)}'));
