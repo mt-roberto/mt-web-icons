@@ -15,6 +15,14 @@ You are familiar with Git.
 6. Unzip it
 7. Copy the whole unzipped folder to update this repository
 
+# Create svgs and build components
+
+Run the following command before:
+
+```console
+yarn build
+```
+
 # How to use it
 
 ### Icon component with icon name:
@@ -22,22 +30,10 @@ You are familiar with Git.
 ```javascript
 import React from 'react';
 import { ReactElement } from 'react';
-const Icon = 'mt-web-icons/components/react/Icon';
+const Icon = 'mt-web-icons';
 
 export default function IconAuto(): ReactElement {
   return <Icon name="auto" width={100} height={100} fill="#ffffff" />;
-}
-```
-
-### Icon component with invalid icon name will display a placeholder icon:
-
-```javascript
-import React from 'react';
-import { ReactElement } from 'react';
-const Icon = 'mt-web-icons/components/react/Icon';
-
-export default function IconAuto(): ReactElement {
-  return <Icon name="Invalid Icon" />;
 }
 ```
 
@@ -46,7 +42,7 @@ export default function IconAuto(): ReactElement {
 ```javascript
 import React from 'react';
 import { ReactElement } from 'react';
-const Icon = 'mt-web-icons/components/react/Icon';
+const Icon = 'mt-web-icons';
 
 export default function IconAuto(): ReactElement {
   return <Icon name="Auto" placeholder={null} fallback={<div />} />;
@@ -58,9 +54,9 @@ export default function IconAuto(): ReactElement {
 ```javascript
 import React from 'react';
 import { ReactElement } from 'react';
-import IconAuto from 'mt-web-icons/components/react/icons/Auto';
+import IconAuto from 'mt-web-icons/react/Auto';
 
 export default function Icon(): ReactElement {
-  return <IconAuto width={100} height={100} fill="#ffffff" />;
+  return <Auto width={100} height={100} fill="#ffffff" />;
 }
 ```
