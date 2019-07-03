@@ -28,9 +28,8 @@ yarn build
 ### Icon component with icon name:
 
 ```javascript
-import React from 'react';
-import { ReactElement } from 'react';
-const Icon = 'mt-web-icons';
+import React, { ReactElement } from 'react';
+import Icon from 'mt-web-icons';
 
 export default function IconAuto(): ReactElement {
   return <Icon name="auto" width={100} height={100} fill="#ffffff" />;
@@ -40,9 +39,8 @@ export default function IconAuto(): ReactElement {
 ### Icon component with invalid icon name will display a placeholder icon:
 
 ```javascript
-import React from 'react';
-import { ReactElement } from 'react';
-const Icon = 'mt-web-icons';
+import React, { ReactElement } from 'react';
+import Icon from 'mt-web-icons';
 
 export default function IconAuto(): ReactElement {
   return <Icon name="Invalid Icon" />;
@@ -52,9 +50,8 @@ export default function IconAuto(): ReactElement {
 ### Icon with defined placeholder and fallback for suspence:
 
 ```javascript
-import React from 'react';
-import { ReactElement } from 'react';
-const Icon = 'mt-web-icons';
+import React, { ReactElement } from 'react';
+import Icon from 'mt-web-icons';
 
 export default function IconAuto(): ReactElement {
   return <Icon name="Auto" placeholder={null} fallback={<div />} />;
@@ -64,11 +61,10 @@ export default function IconAuto(): ReactElement {
 ### Specific Icon:
 
 ```javascript
-import React from 'react';
-import { ReactElement } from 'react';
-import IconAuto from 'mt-web-icons/react/Auto';
+import React, { ReactElement } from 'react';
+import { Auto } from 'mt-web-icons';
 
 export default function Icon(): ReactElement {
-  return <IconAuto width={100} height={100} fill="#ffffff" />;
+  return <Auto width={100} height={100} fill="#ffffff" />;
 }
 ```

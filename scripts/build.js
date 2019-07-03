@@ -14,7 +14,12 @@ const FOLDER = {
 };
 
 const BABEL_SETTINGS = {
-  plugins: ['@babel/plugin-transform-react-jsx', '@babel/plugin-syntax-dynamic-import']
+  minified: true,
+  plugins: [
+    '@babel/plugin-transform-react-jsx',
+    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-proposal-export-default-from'
+  ]
 };
 
 // We wanna preserve the ViewBox to preserve the aspect ratio of the svg.
@@ -88,27 +93,24 @@ icomoonJsonDefinition.forEach(async ({ properties: { name }, icon: { paths } }) 
 async function generateIconComponent() {
   const iconComponendFolder = path.join(FOLDER.REACT, 'Icon');
 
-  // Creates the switch statements cases with lazy imports.
-  const switchStatements = icomoonJsonDefinition.map(({ properties: { name } }) => {
+  const componentStatements = icomoonJsonDefinition.map(({ properties: { name } }) => {
     const componentName = toPascalCase(name);
     const componentPath = path.join(FOLDER.REACT, componentName);
-    return `
-      case '${componentName}':
-        return lazy(() => import('${path.relative(iconComponendFolder, componentPath)}'));
-      break;
-    `;
+    return { name: componentName, path: path.relative(iconComponendFolder, componentPath) };
   });
 
   // Generats the IconComponent source
   const iconComponentTemplate = await ejs.renderFile(path.join(FOLDER.TEMPLATES, 'IconComponent.jsx'), {
-    switchStatements: switchStatements.join('')
-  });
+    components: componentStatements
+  }, { rmWhitespace: true });
   // Transpiles `IconComponent` JSX => JS with Babel
   const iconComponentSource = await babel.transformAsync(iconComponentTemplate, BABEL_SETTINGS);
   fs.outputFile(path.join(iconComponendFolder, 'index.js'), iconComponentSource.code);
 
   // Generates type definitions for the `IconComponent`
-  const typeDefinition = await ejs.renderFile(path.join(FOLDER.TEMPLATES, 'IconComponentTypeDefinition.d.ts'));
+  const typeDefinition = await ejs.renderFile(path.join(FOLDER.TEMPLATES, 'IconComponentTypeDefinition.d.ts'), {
+    components: componentStatements
+  });
   fs.outputFile(path.join(iconComponendFolder, 'index.d.ts'), typeDefinition);
 }
 
