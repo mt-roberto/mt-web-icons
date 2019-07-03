@@ -1,3 +1,3 @@
 /// <reference types="react" />
-import { HTMLAttributes, ReactElement } from 'react';
-export default function PostageExpense(props: HTMLAttributes<SVGElement>): ReactElement;
+import { SVGAttributes, SVGElement, ReactElement } from 'react';
+export default function PostageExpense(props: SVGAttributes<SVGElement>): ReactElement;

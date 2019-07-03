@@ -1,3 +1,3 @@
 /// <reference types="react" />
-import { HTMLAttributes, ReactElement } from 'react';
-export default function CorpSundryTaxes(props: HTMLAttributes<SVGElement>): ReactElement;
+import { SVGAttributes, SVGElement, ReactElement } from 'react';
+export default function CorpSundryTaxes(props: SVGAttributes<SVGElement>): ReactElement;

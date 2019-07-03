@@ -3,19 +3,20 @@ import toPascalCase from 'to-pascal-case';
 
 const { Suspense, lazy } = React;
 
+<%_ components.forEach(({ name, path }) => { _%>
+<%- `const _${name} = lazy(() => import('${path}'));` %>
+<%- `export { _${name} as ${name} };` %>
+<% }); %>
+
 function getModule(name) {
   switch (name) {
-    // Switch statement example:
-    //
-    // ======
-    // case 'Baloon':
-    //   return lazy(() => import('../icons/Baloon.jsx');
-    //   break;
-    //
-    <%- switchStatements; %>
+<%_ components.forEach(({ name }) => { _%>
+    <%- `case '${name}':` %>
+      <%- `return _${name};` %>
+<% }); %>
+
     default:
       return;
-      break;
   }
 }
 

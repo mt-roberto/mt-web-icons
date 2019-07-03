@@ -1,3 +1,3 @@
 /// <reference types="react" />
-import { HTMLAttributes, ReactElement } from 'react';
-export default function Communications(props: HTMLAttributes<SVGElement>): ReactElement;
+import { SVGAttributes, SVGElement, ReactElement } from 'react';
+export default function Communications(props: SVGAttributes<SVGElement>): ReactElement;
