@@ -8,16 +8,18 @@ const ejs = require('ejs');
 
 const FOLDER = {
   SVGS: path.resolve(__dirname, '../svgs'),
-  COMPONENTS: path.resolve(__dirname, '../components'),
+  REACT: path.resolve(__dirname, '../react'),
   ICOMOON: path.resolve(__dirname, '../icomoon'),
   TEMPLATES: path.resolve(__dirname, '../templates')
 };
 
-FOLDER.REACT = path.join(FOLDER.COMPONENTS, 'react');
-FOLDER.REACT_ICONS = path.join(FOLDER.COMPONENTS, 'react', 'icons');
-
 const BABEL_SETTINGS = {
-  plugins: ['@babel/plugin-transform-react-jsx', '@babel/plugin-syntax-dynamic-import']
+  minified: true,
+  plugins: [
+    '@babel/plugin-transform-react-jsx',
+    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-proposal-export-default-from'
+  ]
 };
 
 // We wanna preserve the ViewBox to preserve the aspect ratio of the svg.
@@ -39,10 +41,10 @@ const icomoonJsonDefinition = require(path.join(FOLDER.ICOMOON, 'selection.json'
 
 // Removes svgs and components directories in case some icons are not available anymore
 fs.removeSync(FOLDER.SVGS);
-fs.removeSync(FOLDER.COMPONENTS);
+fs.removeSync(FOLDER.REACT);
 
 fs.mkdirsSync(FOLDER.SVGS);
-fs.mkdirsSync(FOLDER.COMPONENTS);
+fs.mkdirsSync(FOLDER.REACT);
 
 icomoonJsonDefinition.forEach(async ({ properties: { name }, icon: { paths } }) => {
   // Creates the SVG source code
@@ -65,7 +67,7 @@ icomoonJsonDefinition.forEach(async ({ properties: { name }, icon: { paths } }) 
 
     // Creates Typescript Components
     const componentName = toPascalCase(name);
-    const componentPath = path.join(FOLDER.REACT_ICONS, componentName);
+    const componentPath = path.join(FOLDER.REACT, componentName);
 
     // Creates `react` folder where to save our components
     fs.mkdirsSync(componentPath);
@@ -91,27 +93,28 @@ icomoonJsonDefinition.forEach(async ({ properties: { name }, icon: { paths } }) 
 async function generateIconComponent() {
   const iconComponendFolder = path.join(FOLDER.REACT, 'Icon');
 
-  // Creates the switch statements cases with lazy imports.
-  const switchStatements = icomoonJsonDefinition.map(({ properties: { name } }) => {
+  const componentStatements = icomoonJsonDefinition.map(({ properties: { name } }) => {
     const componentName = toPascalCase(name);
-    const componentPath = path.join(FOLDER.REACT_ICONS, componentName);
-    return `
-      case '${componentName}':
-        return lazy(() => import('${path.relative(iconComponendFolder, componentPath)}'));
-      break;
-    `;
+    const componentPath = path.join(FOLDER.REACT, componentName);
+    return { name: componentName, path: path.relative(iconComponendFolder, componentPath) };
   });
 
   // Generats the IconComponent source
-  const iconComponentTemplate = await ejs.renderFile(path.join(FOLDER.TEMPLATES, 'IconComponent.jsx'), {
-    switchStatements: switchStatements.join('')
-  });
+  const iconComponentTemplate = await ejs.renderFile(
+    path.join(FOLDER.TEMPLATES, 'IconComponent.jsx'),
+    {
+      components: componentStatements
+    },
+    { rmWhitespace: true }
+  );
   // Transpiles `IconComponent` JSX => JS with Babel
   const iconComponentSource = await babel.transformAsync(iconComponentTemplate, BABEL_SETTINGS);
   fs.outputFile(path.join(iconComponendFolder, 'index.js'), iconComponentSource.code);
 
   // Generates type definitions for the `IconComponent`
-  const typeDefinition = await ejs.renderFile(path.join(FOLDER.TEMPLATES, 'IconComponentTypeDefinition.d.ts'));
+  const typeDefinition = await ejs.renderFile(path.join(FOLDER.TEMPLATES, 'IconComponentTypeDefinition.d.ts'), {
+    components: componentStatements
+  });
   fs.outputFile(path.join(iconComponendFolder, 'index.d.ts'), typeDefinition);
 }
 
