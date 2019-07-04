@@ -24,6 +24,9 @@
   "peerDependencies": {
     "react": "^16.8.6"
   },
+  "dependencies": {
+    "to-pascal-case": "^1.0.0"
+  },
   "devDependencies": {
     "react": "^16.8.6",
     "@babel/core": "^7.4.5",
@@ -35,7 +38,6 @@
     "ejs": "^2.6.2",
     "fs-extra": "^8.0.1",
     "svgo": "^1.2.2",
-    "to-pascal-case": "^1.0.0",
     "type-fest": "^0.5.2"
   }
 }
