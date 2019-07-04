@@ -54,7 +54,7 @@ export default function IconAuto(): ReactElement {
 ```javascript
 import React from 'react';
 import { ReactElement } from 'react';
-import IconAuto from 'mt-web-icons/react/Auto';
+import { Auto } from 'mt-web-icons';
 
 export default function Icon(): ReactElement {
   return <Auto width={100} height={100} fill="#ffffff" />;
